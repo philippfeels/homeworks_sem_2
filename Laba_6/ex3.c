@@ -1,4 +1,4 @@
-// Номер тактики: 1 (статический массив)
+// Статический массив
 
 #include <stdio.h>
 
@@ -12,6 +12,8 @@ int main() {
     int elem;
     int numInput;
     int numFun;
+
+    printf("Номер тактики: 1 (статический массив)\n\n");
 
     printf("Введите размер массива: \n");
     scanf("%d", &size);
@@ -36,18 +38,43 @@ int main() {
         }
     }   
 
-    print(numArr, size);
-        
-    printf("Введите число, которое вы хотите добавить в массив: \n");
-    scanf("%d", &numInput);
-        
-    printf("Введите номер операции, которую вы хотите произвести: \n1. insert\n2. append\n");
-    scanf("%d", &numFun);
-    if (numFun == 1) {
-        insert(numArr, size, numInput);
-    } else if (numFun == 2) {
-        append(numArr, size, numInput);
-    }
+    // Тесты insert
+
+    printf("append:\n\n");
+    
+    printf("Добавляем 3\n");
+    append(numArr, size, 3);
+    
+    printf("Добавляем 5\n");
+    append(numArr, size, 5);
+    
+    printf("Добавляем 7\n");
+    append(numArr, size, 7);
+    
+    printf("Добавляем 12\n");
+    append(numArr, size, 12);
+    
+    printf("Добавляем 24\n");
+    append(numArr, size, 24);
+
+    //Тесты append
+
+    printf("insert:\n\n");
+    
+    printf("Добавляем 3\n");
+    insert(numArr, size, 3);
+    
+    printf("Добавляем 5\n");
+    insert(numArr, size, 5);
+    
+    printf("Добавляем 7\n");
+    insert(numArr, size, 7);
+    
+    printf("Добавляем 12\n");
+    insert(numArr, size, 12);
+    
+    printf("Добавляем 24\n");
+    insert(numArr, size, 24);
 
     return 0;
 }
@@ -58,7 +85,7 @@ void print(int numArr[], int size) {
     printf("{");
     for (j = 0; j < size; j++) {
         if (j == size - 1) {
-            printf("%d}\n", numArr[j]);
+            printf("%d}\n\n", numArr[j]);
             break;
         }
         printf("%d, ", numArr[j]);
