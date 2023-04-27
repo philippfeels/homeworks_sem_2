@@ -9,13 +9,31 @@ void combSort(char** arr);
 void swap_strings(char* x, char* y);
 void getWords(char* arr);
 void print(char** arr);
+void copy(char** arr, char** copyArr);
 
+int main() {
+    int i;
+    char** strArr = (char**)malloc(sizeof(char*)*10);
+    char** copyArr = (char**)malloc(sizeof(char*)*10);
+    for (i = 0; i < 10; i++) {strArr[i] = (char*)malloc(sizeof(char)); copyArr[i] = (char*)malloc(sizeof(char));}
 
-void swap_strings(char* x, char* y) {
-	char temp[20];
-    strcpy(temp, x);
-    strcpy(x, y);
-    strcpy(y, temp);
+    printf("Введите 10 слов для сортировки их по алфавиту: \n");
+    for (i = 0; i < 10; i++) {getWords(strArr[i]);}
+    
+    printf("Введите номер опции:\n1. SelectionSort\n2. BubbleSort\n3. CombSort\n4. Применить всё\n");
+    scanf("%d", &i);
+
+    if (i == 1) {selectionSort(strArr);}
+    else if (i == 2) {bubbleSort(strArr);}
+    else if (i == 3) {combSort(strArr);}
+    else if (i == 4) {
+        copy(strArr, copyArr);
+        selectionSort(copyArr);
+        copy(strArr, copyArr);
+        bubbleSort(copyArr);
+        combSort(strArr);
+        }
+    return 0;
 }
 
 void selectionSort(char** arr) {
@@ -52,40 +70,6 @@ void bubbleSort(char** arr) {
     printf("Кол-во итераций (BubbleSort): %d\n", count);
 }
 
-int main() {
-    int i, n = 10; 
-    char** strArr = (char**)malloc(sizeof(char*)*n);
-    for (i = 0; i < n; i++) {strArr[i] = (char *)malloc(sizeof(char));}
-
-    printf("Введите 10 слов для сортировки их по алфавиту: \n");
-    for (i = 0; i < n; i++) {getWords(strArr[i]);}
-    
-    printf("Введите номер опции:\n1. SelectionSort\n2. BubbleSort\n3. CombSort\n4. Применить всё\n");
-    scanf("%d", &i);
-
-    if (i == 1) {selectionSort(strArr);}
-    else if (i == 2) {bubbleSort(strArr);}
-    else if (i == 3) {combSort(strArr);}
-    else if (i == 4) {selectionSort(strArr); bubbleSort(strArr), combSort(strArr);}
-
-    return 0;
-}
-
-void getWords(char* arr) {
-    char str[20];
-    scanf("%s", str);
-    strcpy(arr, str);
-}
-
-void print(char** arr) {
-    printf("[");
-    for (int i = 0; i < 10; i++) {
-        if (i == 9) {printf("%s", arr[i]);}
-        else {printf("%s, ", arr[i]);}
-    }
-    printf("]\n");
-}
-
 void combSort(char** arr) {
     printf("CombSort:\n");
     
@@ -95,7 +79,6 @@ void combSort(char** arr) {
     int swapped = 1;
 
     while(gap > 1 || swapped) {
-
         swapped = 0;
         if (gap < 1) {gap = 1;}
         int igap = (int) gap;
@@ -107,4 +90,32 @@ void combSort(char** arr) {
         gap /= 1.3;
     }
     printf("Кол-во итераций (CombSort): %d\n", count);
+}
+
+void print(char** arr) {
+    printf("[");
+    for (int i = 0; i < 10; i++) {
+        if (i == 9) {printf("%s", arr[i]);}
+        else {printf("%s, ", arr[i]);}
+    }
+    printf("]\n");
+}
+
+void getWords(char* arr) {
+    char str[20];
+    scanf("%s", str);
+    strcpy(arr, str);
+}
+
+void copy(char** arr, char** copyArr) {
+    for (int i = 0; i < 10; i++) {
+        strcpy(copyArr[i], arr[i]);
+    }
+}
+
+void swap_strings(char* x, char* y) {
+	char temp[20];
+    strcpy(temp, x);
+    strcpy(x, y);
+    strcpy(y, temp);
 }
