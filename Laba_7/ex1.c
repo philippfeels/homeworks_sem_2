@@ -7,7 +7,7 @@ void selectionSort(char* arr);
 void swap_chars(char* x, char* y);
 void getWords(char* arr);
 void print(char* arr);
-// void combSort(char* arr);
+void combSort(char* arr);
 
 
 void swap_chars(char* x, char* y) {
@@ -52,7 +52,7 @@ int main() {
     
     getWords(strArr[0]);
     print(strArr[0]);
-    bubbleSort(strArr[0]);
+    combSort(strArr[0]);
     print(strArr[0]);
 
     return 0;
@@ -71,4 +71,24 @@ void print(char* arr) {
         printf("%c", arr[i]);
     }
     printf("\n");
+}
+
+void combSort(char* arr) {
+    int size = strlen(arr);
+
+    float gap = (size/1.3);
+    int swapped = 1;
+
+    while(gap > 1 || swapped) {
+
+        swapped = 0;
+        if(gap < 1) {gap = 1;}
+        int igap = (int) gap;
+
+        for(int i = 0; i + igap < size; i++) {
+            if(arr[i] > arr[i + igap])
+            {char temp = arr[i]; arr[i] = arr[i + igap]; arr[i + igap] = temp; swapped = 1;}
+        }
+        gap /= 1.3;
+    }
 }
