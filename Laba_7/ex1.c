@@ -1,7 +1,19 @@
+/*  1. За наименьшее кол-во итераций справляется SelecionSort, однако нельзя сказать, что
+этот алгоритм значительно превосходит своей эффективностью другие. Скорость и кол-во итераций зависят также от
+размера словаря и от того, как словарь отсортирован изначально: частично или нет. Тем не менее в рамках данной
+задачи SelectionSort показывает лучший результат (размер массива составляет всего 10 элементов).
+    2. Каждый алгоритм сортирует словарь за разное время. Быстрее всех отсортировал SelectionSort, на втором
+месте CombSort, на третьем - BubbleSort. SelectionSort отсортировал быстрее, потому что его алгоритм работает более
+эффективно с массивами малых размеров (следует из ответа на вопрос 1). Разница времени выполнения BubbleSort и CombSort
+несущественна: CombSort чуть-чуть быстрее. Это обусловленно тем, что по своему принципу CombSort является "продвинутой"
+версией BubbleSort, которая позволяет избавляться от так называемых "черепах" (элементы, имеющие большое значение и
+стоящие в начале списка).
+*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 
 void selectionSort(char** arr);
 void bubbleSort(char** arr);
@@ -28,10 +40,22 @@ int main() {
     else if (i == 3) {combSort(strArr);}
     else if (i == 4) {
         copy(strArr, copyArr);
+        clock_t start = 0, end = 0;
+        start = clock();
         selectionSort(copyArr);
+        end = clock();
+        printf("Время выполнения: %10lf\n\n", (double)(end - start) / CLOCKS_PER_SEC);
         copy(strArr, copyArr);
+        start = 0, end = 0;
+        start = clock();
         bubbleSort(copyArr);
+        end = clock();
+        printf("Время выполнения: %10lf\n\n", (double)(end - start) / CLOCKS_PER_SEC);
+        start = 0, end = 0;
+        start = clock();
         combSort(strArr);
+        end = clock();
+        printf("Время выполнения: %10lf\n\n", (double)(end - start) / CLOCKS_PER_SEC);
         }
     return 0;
 }
@@ -73,10 +97,8 @@ void bubbleSort(char** arr) {
 void combSort(char** arr) {
     printf("CombSort:\n");
     
-    int count = 0, size = 10;
-
+    int count = 0, size = 10, swapped = 1;
     float gap = (size/1.3);
-    int swapped = 1;
 
     while(gap > 1 || swapped) {
         swapped = 0;
@@ -84,8 +106,7 @@ void combSort(char** arr) {
         int igap = (int) gap;
 
         for(int i = 0; i + igap < size; i++) {
-            if(strcmp(arr[i], arr[i +igap]) > 0)
-            {swap_strings(arr[i], arr[i + igap]); swapped = 1; print(arr); count += 1;}
+            if(strcmp(arr[i], arr[i +igap]) > 0) {swap_strings(arr[i], arr[i + igap]); swapped = 1; print(arr); count += 1;}
         }
         gap /= 1.3;
     }
@@ -108,9 +129,7 @@ void getWords(char* arr) {
 }
 
 void copy(char** arr, char** copyArr) {
-    for (int i = 0; i < 10; i++) {
-        strcpy(copyArr[i], arr[i]);
-    }
+    for (int i = 0; i < 10; i++) {strcpy(copyArr[i], arr[i]);}
 }
 
 void swap_strings(char* x, char* y) {
